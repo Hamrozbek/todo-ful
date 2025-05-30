@@ -1,6 +1,6 @@
 let elForm = document.querySelector(".todo-form");
 
-let localTodos = JSON.parse(localStorage.getItem("todos")) || [];
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 // Create todo 
 elForm.addEventListener("submit", function (evt) {
