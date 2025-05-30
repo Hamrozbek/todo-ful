@@ -1,7 +1,6 @@
 let elForm = document.querySelector(".todo-form");
 
-let localTodos = localStorage.getItem("todos");
-let todos = localTodos ? JSON.parse(localTodos) : [];
+let localTodos = JSON.parse(localStorage.getItem("todos")) || [];
 
 // Create todo 
 elForm.addEventListener("submit", function (evt) {
@@ -12,9 +11,9 @@ elForm.addEventListener("submit", function (evt) {
         isComplated: false
     };
     todos.push(todo);
-    localStorage.setItem("todos", JSON.stringify(todos));
     evt.target.reset();
     renderTodos(todos, elForm.nextElementSibling);
+    localStorage.setItem("todos", JSON.stringify(todos));
 });
 // Create todo  
 
@@ -46,21 +45,22 @@ function renderTodos(arr, list) {
         elItem.addEventListener("click", function (e) {
             if (e.target.id === "delete") {
                 todos.splice(index, 1);
-                localStorage.setItem("todos", JSON.stringify(todos));
                 renderTodos(todos, elForm.nextElementSibling);
+                localStorage.setItem("todos", JSON.stringify(todos));
             } else if (e.target.id === "edit") {
                 if (!item.isComplated) {
                     let newValue = prompt("Edit todo:", item.title);
                     if (newValue !== null && newValue.trim()) {
                         todos[index].title = newValue.trim();
-                        localStorage.setItem("todos", JSON.stringify(todos));
                         renderTodos(todos, elForm.nextElementSibling);
+                        localStorage.setItem("todos", JSON.stringify(todos));
                     }
                 }
             }
         });
     });
 }
+renderTodos(todos, elForm.nextElementSibling);
 // render todos 
 
 // check part 
@@ -68,9 +68,8 @@ function handleCheckClick(id) {
     let findObj = todos.find(item => item.id === id);
     if (findObj) {
         findObj.isComplated = !findObj.isComplated;
-        localStorage.setItem("todos", JSON.stringify(todos));
         renderTodos(todos, elForm.nextElementSibling);
+        localStorage.setItem("todos", JSON.stringify(todos));
     }
 }
-renderTodos(todos, elForm.nextElementSibling);
 // check part
