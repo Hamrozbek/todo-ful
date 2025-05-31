@@ -52,8 +52,8 @@ function renderTodos(arr, list) {
           <p class="text-white">${item.title}</p>
         </div>
         <div class="flex items-center gap-2">
-          <button id="edit" class="bg-green-600 text-white p-2 rounded-md w-[100px] bg-transparent font-bold border-[2px] border-transparent hover:border-white">Edit</button>
-          <button id="delete" class="bg-red-600 text-white p-2 rounded-md w-[100px] bg-transparent font-bold border-[2px] border-transparent hover:border-white">Delete</button>
+          <button id="edit" class="bg-green-600 text-white p-3 rounded-md w-[100px] hover:bg-transparent font-bold border-[2px] border-transparent hover:border-white">Edit</button>
+          <button id="delete" class="bg-red-600 text-white p-3 rounded-md w-[100px] hover:bg-transparent font-bold border-[2px] border-transparent hover:border-white">Delete</button>
         </div>
       </div>
       ${imgHtml}

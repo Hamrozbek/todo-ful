@@ -1,58 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./css/main.css">
-  <title>Todos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            clifford: '#da373d',
-          }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Todos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
 </head>
+
 <body>
     <h1 class="text-white text-[25px] font-bold text-center pt-[40px]">Todo App</h1>
-  <form autocomplete="off" class="todo-form p-5 rounded-md w-[500px] mx-auto mt-5 mb-5">
-    <div class="flex items-center gap-5">
-      <input required name="todoInput" type="text" placeholder="Enter todo"
-        class="text-[20px] bg-transparent text-white placeholder-white border-[2px] border-white rounded px-4 py-2 outline-none w-[70%] rounded-md" />
-    
-      <label>
-        <input class="hidden choose-input" type="file" />
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-          class="bi bi-upload cursor-pointer text-white" viewBox="0 0 16 16">
-          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 1 1 1h12a1 1 0 0 1 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-          <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 1 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-        </svg>
-      </label>
+    <form autocomplete="off" class="todo-form p-5 rounded-md w-[500px] mx-auto mt-5 mb-5">
+        <div class="flex items-center gap-5">
+            <input required name="todoInput" type="text" placeholder="Enter todo"
+                class="text-[20px] bg-transparent text-white placeholder-white border-[2px] border-white rounded px-4 py-2 outline-none w-[70%] rounded-md" />
 
-      <button class="w-[30%] border-transparent border-[2px] border-white hover:shadow-md shadow-white p-2 rounded-md text-white text-[20px]">
-        Create
-      </button>
-    </div>
+            <label>
+                <input class="hidden choose-input" type="file" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                    class="bi bi-upload cursor-pointer text-white" viewBox="0 0 16 16">
+                    <path
+                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 1 1 1h12a1 1 0 0 1 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                    <path
+                        d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 1 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                </svg>
+            </label>
 
-    <div class="mt-5">
-      <img class="choose-img h-0 w-full rounded-md object-cover" src="" alt="" />
-    </div>
-  </form>
+            <button
+                class="w-[30%] border-transparent border-[2px] border-white hover:shadow-md shadow-white p-2 rounded-md text-white text-[20px]">
+                Create
+            </button>
+        </div>
 
-  <ul class="w-[500px] mx-auto flex flex-col gap-5"></ul>
+        <div class="mt-5">
+            <img class="choose-img h-0 w-full rounded-md object-cover" src="" alt="" />
+        </div>
+    </form>
 
-  <script src="./js/main.js"></script>
-  <style type="text/tailwindcss">
-    @layer utilities {
+    <ul class="w-[500px] mx-auto flex flex-col gap-5"></ul>
+
+    <script src="./js/main.js"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
       .content-auto {
         content-visibility: auto;
       }
     }
   </style>
 </body>
+
 </html>
