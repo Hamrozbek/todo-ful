@@ -1,75 +1,98 @@
 let elForm = document.querySelector(".todo-form");
+let elChooseInput = document.querySelector(".choose-input");
+let elChooseImg = document.querySelector(".choose-img");
 
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-// Create todo 
+// Create Todo
 elForm.addEventListener("submit", function (evt) {
-    evt.preventDefault();
-    let todo = {
-        id: todos[todos.length - 1]?.id ? todos[todos.length - 1].id + 1 : 1,
-        title: evt.target.todoInput.value,
-        isComplated: false
-    };
-    todos.push(todo);
-    evt.target.reset();
-    renderTodos(todos, elForm.nextElementSibling);
-    localStorage.setItem("todos", JSON.stringify(todos));
+  evt.preventDefault();
+
+  let imageSrc = elChooseImg.src.includes("blob:") ? elChooseImg.src : null;
+
+  let todo = {
+    id: todos[todos.length - 1]?.id ? todos[todos.length - 1].id + 1 : 1,
+    title: evt.target.todoInput.value,
+    isComplatet: false,
+    image: imageSrc
+  };
+
+  todos.push(todo);
+  evt.target.reset();
+  renderTodos(todos, elForm.nextElementSibling);
+  localStorage.setItem("todos", JSON.stringify(todos));
+
+  elChooseImg.src = "";
+  elChooseImg.classList.remove("h-[200px]");
 });
-// Create todo  
 
-// Render todos 
+// Render Todos
 function renderTodos(arr, list) {
-    list.innerHTML = null;
-    arr.forEach((item, index) => {
-        let elItem = document.createElement("li");
-        elItem.className = `bg-white ${item.isComplated ? "line-through opacity-[70%] cursor-not-allowed" : ""} duration-300 p-5 rounded-md flex items-center justify-between`;
+  list.innerHTML = "";
 
-        elItem.innerHTML = `
-            <div class="flex items-center gap-2">
-                <label>
-                    <input class="hidden" type="checkbox">
-                    <div onclick="handleCheckClick(${item.id})" class="w-[20px] h-[20px] relative flex items-center justify-center rounded-full border-[1px] border-slate-500">
-                        <div class="${item.isComplated ? "bg-red-600" : ""} absolute inset-[1px] rounded-full"></div>
-                    </div>
-                </label>
-                <strong>${index + 1}.</strong>
-                <p>${item.title}</p>
+  arr.forEach((item, index) => {
+    let elItem = document.createElement("li");
+    elItem.className = `bg-transparent ${item.isComplatet ? "line-through opacity-[70%] cursor-not-allowed" : ""} duration-300 p-5 rounded-md`;
+
+    // Faqat rasm bor bo‘lsa, <img> ni qo‘shamiz
+    let imgHtml = item.image
+      ? `<img class="mt-5 rounded-md w-full h-[300px]" src="${item.image}" alt="todo img" />`
+      : "";
+
+    elItem.innerHTML = `
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 border-[2px] border-white w-[240px] p-3 rounded-md">
+          <label>
+            <input id="${item.id}" onclick="handleCheckClick(${item.id})" class="hidden" type="checkbox" />
+            <div class="w-[20px] relative flex items-center justify-center h-[20px] rounded-full border-[2px] border-white">
+              <div class="complate ${item.isComplatet ? "bg-red-600" : ""} absolute inset-[1.2px] rounded-full"></div>
             </div>
-            <div class="flex gap-2 items-center">
-                <button id="edit" class="bg-green-600 text-white p-2 rounded-md w-[100px]">Edit</button>
-                <button id="delete" class="bg-red-600 text-white p-2 rounded-md w-[100px]">Delete</button>
-            </div>
-        `;
-        list.appendChild(elItem);
+          </label>
+          <strong class="text-white">${index + 1}.</strong>
+          <p class="text-white">${item.title}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="edit" class="bg-green-600 text-white p-2 rounded-md w-[100px] bg-transparent font-bold border-[2px] border-transparent hover:border-white">Edit</button>
+          <button id="delete" class="bg-red-600 text-white p-2 rounded-md w-[100px] bg-transparent font-bold border-[2px] border-transparent hover:border-white">Delete</button>
+        </div>
+      </div>
+      ${imgHtml}
+    `;
 
-        elItem.addEventListener("click", function (e) {
-            if (e.target.id === "delete") {
-                todos.splice(index, 1);
-                renderTodos(todos, elForm.nextElementSibling);
-                localStorage.setItem("todos", JSON.stringify(todos));
-            } else if (e.target.id === "edit") {
-                if (!item.isComplated) {
-                    let newValue = prompt("Edit todo:", item.title);
-                    if (newValue !== null && newValue.trim()) {
-                        todos[index].title = newValue.trim();
-                        renderTodos(todos, elForm.nextElementSibling);
-                        localStorage.setItem("todos", JSON.stringify(todos));
-                    }
-                }
-            }
-        });
-    });
-}
-renderTodos(todos, elForm.nextElementSibling);
-// render todos 
+    list.appendChild(elItem);
 
-// check part 
-function handleCheckClick(id) {
-    let findObj = todos.find(item => item.id === id);
-    if (findObj) {
-        findObj.isComplated = !findObj.isComplated;
+    // Edit / Delete eventlari
+    elItem.addEventListener("click", function (e) {
+      if (e.target.id === "delete") {
+        todos.splice(index, 1);
         renderTodos(todos, elForm.nextElementSibling);
         localStorage.setItem("todos", JSON.stringify(todos));
-    }
+      } else if (e.target.id === "edit") {
+        if (!item.isComplatet) {
+          let newValue = prompt("Edit title", item.title);
+          if (newValue) {
+            todos[index].title = newValue;
+            renderTodos(todos, elForm.nextElementSibling);
+            localStorage.setItem("todos", JSON.stringify(todos));
+          }
+        }
+      }
+    });
+  });
 }
-// check part
+
+renderTodos(todos, elForm.nextElementSibling);
+
+// Check Part
+function handleCheckClick(id) {
+  let findObj = todos.find(item => item.id == id);
+  findObj.isComplatet = !findObj.isComplatet;
+  renderTodos(todos, elForm.nextElementSibling);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+// Choose Image Part
+elChooseInput.addEventListener("change", function (e) {
+  elChooseImg.src = URL.createObjectURL(e.target.files[0]);
+  elChooseImg.classList.add("h-[200px]");
+});
